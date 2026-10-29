@@ -1,0 +1,49 @@
+{
+  "weekStart": "2026-10-26",
+  "weekEnd": "2026-10-30",
+  "drawnAt": "2026-10-29T13:18:07+01:00",
+  "minNumber": 1,
+  "maxNumber": 30,
+  "days": [
+    {
+      "date": "2026-10-26",
+      "day": "poniedziałek",
+      "numbers": [
+        18,
+        5
+      ]
+    },
+    {
+      "date": "2026-10-27",
+      "day": "wtorek",
+      "numbers": [
+        10,
+        7
+      ]
+    },
+    {
+      "date": "2026-10-28",
+      "day": "środa",
+      "numbers": [
+        24,
+        1
+      ]
+    },
+    {
+      "date": "2026-10-29",
+      "day": "czwartek",
+      "numbers": [
+        28,
+        12
+      ]
+    },
+    {
+      "date": "2026-10-30",
+      "day": "piątek",
+      "numbers": [
+        29,
+        23
+      ]
+    }
+  ]
+}

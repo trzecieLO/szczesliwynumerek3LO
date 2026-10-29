@@ -1,0 +1,198 @@
+
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f9f8ff" />
+  <meta name="description" content="Szczęśliwy Numerek III LO w Rzeszowie " />
+  <meta property="og:title" content="Szczęśliwy Numerek ✨ | III LO Rzeszów" />
+  <meta property="og:description" content="Sprawdź dwa szczęśliwe numerki na dziś i cały tydzień szkolny." />
+
+  <title>Szczęśliwy Numerek ✦ III LO Rzeszów</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+
+
+</head>
+
+<body>
+  <div class="ambient ambient--a" aria-hidden="true"></div>
+  <div class="ambient ambient--b" aria-hidden="true"></div>
+
+  <div class="page-wrap">
+
+    <!-- NAGŁÓWEK Z LOGO III LO -->
+    <header class="site-header">
+      
+      <a
+        href="https://3lo.resman.pl/"
+        class="school-link"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="III Liceum Ogólnokształcące im. Cypriana Kamila Norwida w Rzeszowie — strona szkoły"
+      >
+        <span class="school-link__logo" aria-hidden="true">
+          <span>III</span>
+          <span>LO</span>
+        </span>
+
+        <span class="school-link__text">
+          <strong>III LO Rzeszów</strong>
+          <small>im. C. K. Norwida</small>
+        </span>
+      </a>
+
+    </header>
+
+    <main>
+
+      <!-- SEKCJA GŁÓWNA -->
+      <section class="hero" aria-labelledby="hero-title">
+
+        <div class="hero__ornament hero__ornament--one" aria-hidden="true">✳</div>
+        <div class="hero__ornament hero__ornament--two" aria-hidden="true">✦</div>
+
+        <div class="hero__copy">
+
+          <h1 id="hero-title">
+            A może dziś<br />
+            padnie na <em>Ciebie?</em>
+          </h1>
+
+          <p class="hero__intro">
+            Dwa szczęśliwe numerki każdego dnia.
+            Sprawdź, komu dziś dopisuje szczęście!
+          </p>
+
+        </div>
+
+        <!-- KARTA LOSOWANIA -->
+        <aside class="draw-card" aria-label="Informacje o kolejnym losowaniu">
+
+          <p class="draw-card__caption">
+            KOLEJNE LOSOWANIE
+          </p>
+
+          <p class="draw-card__when">
+            Piątek, 18:00 <span>🇵🇱</span>
+          </p>
+
+          <div class="draw-card__divider"></div>
+
+          <p class="draw-card__caption draw-card__caption--second">
+            DO LOSOWANIA POZOSTAŁO
+          </p>
+
+          <div class="countdown" id="countdown" aria-live="off">
+            <span class="countdown__loading">Obliczam…</span>
+          </div>
+
+          <p class="draw-card__hint">
+            Nowe numerki na kolejny tydzień
+          </p>
+
+        </aside>
+
+      </section>
+
+      <!-- WYNIKI TYGODNIA -->
+      <section class="results" aria-labelledby="week-title">
+
+        <div class="section-heading">
+
+          <div>
+            <h2 id="week-title">
+              Numerki na ten tydzień<span class="heading-period">.</span>
+            </h2>
+
+            <p id="week-range" class="week-range">
+              Wczytywanie dat tygodnia…
+            </p>
+          </div>
+
+          <div id="week-badge" class="week-badge">
+            <span class="week-badge__dot"></span>
+            Wyniki tygodnia
+          </div>
+
+        </div>
+
+        <div id="notice" class="notice" role="status" hidden></div>
+
+        <div
+          id="weekday-grid"
+          class="weekday-grid"
+          aria-live="polite"
+          aria-busy="true"
+        >
+          <div class="placeholder">
+            Wczytuję szczęśliwe numerki…
+          </div>
+        </div>
+
+        <div class="legend-row">
+
+          <span class="legend-row__item">
+            <span class="legend-row__icon">✳</span>
+            <strong>10 unikalnych numerków</strong> w tygodniu
+          </span>
+
+          <span class="legend-row__item">
+            <span class="legend-row__icon">↻</span>
+            Nowe losowanie w każdy piątek o 18:00
+          </span>
+
+        </div>
+
+      </section>
+
+      <!-- INFORMACJE -->
+      <section class="info-strip" aria-label="Jak działa losowanie">
+
+        <div class="info-strip__emoji" aria-hidden="true">
+          💜
+        </div>
+
+        <div class="info-strip__text">
+          <p>
+            Wyniki zapisujemy raz na cały tydzień.
+          </p>
+        </div>
+
+        <div class="info-strip__spark" aria-hidden="true">✺</div>
+
+      </section>
+
+    </main>
+
+    <!-- STOPKA -->
+    <footer class="footer">
+
+      <span>
+        <a
+          href="https://3lo.resman.pl/"
+          class="school-footer"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          III LO im. C. K. Norwida w Rzeszowie
+        </a>
+      </span>
+
+      <span>
+        
+        <span aria-hidden="true">✦</span>
+        Czas polski (Warszawa)
+      </span>
+
+    </footer>
+
+  </div>
+</body>
+</html>
