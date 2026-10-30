@@ -1,0 +1,67 @@
+name: Szczęśliwy Numerek — losowanie i publikacja
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 18 * * 5'
+      timezone: 'Europe/Warsaw'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: szczesliwy-numerek-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Pobierz pliki repozytorium
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Losuj tylko gdy brakuje wyników na nowy tydzień
+        run: python3 scripts/draw.py
+
+      - name: Zapisz wspólne wyniki w repozytorium
+        shell: bash
+        run: |
+          if ! git diff --quiet -- data/results.json || [ -n "$(git ls-files --others --exclude-standard data/results.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/results.json
+            git commit -m "Losowanie na nowy tydzień"
+            git push origin HEAD:main
+          else
+            echo "Wyniki są aktualne — nie losuję ponownie."
+          fi
+
+      - name: Przygotuj pliki strony do opublikowania
+        shell: bash
+        run: |
+          mkdir -p public/data
+          cp index.html styles.css app.js favicon.svg public/
+          cp data/results.json public/data/results.json
+          touch public/.nojekyll
+
+      - name: Konfiguracja GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Prześlij stronę do GitHub Pages
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+
+      - name: Opublikuj stronę
+        id: deployment
+        uses: actions/deploy-pages@v4
