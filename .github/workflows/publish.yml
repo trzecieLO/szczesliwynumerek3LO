@@ -23,28 +23,49 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Pobierz pliki repozytorium
         uses: actions/checkout@v4
         with:
           persist-credentials: true
 
-      - name: Losuj tylko gdy brakuje wyników na nowy tydzień
-        run: python3 scripts/draw.py
-
-      - name: Zapisz wspólne wyniki w repozytorium
+      - name: Losuj i bezpiecznie zapisz wyniki (z ponowieniem po konflikcie)
         shell: bash
         run: |
-          if ! git diff --quiet -- data/results.json || [ -n "$(git ls-files --others --exclude-standard data/results.json)" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          for attempt in 1 2 3 4 5; do
+            echo "Próba zapisu ${attempt}/5"
+
+            # Zawsze startuj od najnowszej wersji main.
+            # Pracujemy na tymczasowej kopii repozytorium w GitHub Actions.
+            git fetch origin main
+            git checkout -B main origin/main
+
+            # Skrypt NIE zmienia numerków, jeżeli wyniki danego tygodnia już istnieją.
+            python3 scripts/draw.py
+
             git add data/results.json
+            if git diff --cached --quiet; then
+              echo "Wyniki na właściwy tydzień są już zapisane."
+              break
+            fi
+
             git commit -m "Losowanie na nowy tydzień"
-            git push origin HEAD:main
-          else
-            echo "Wyniki są aktualne — nie losuję ponownie."
-          fi
+            if git push origin HEAD:main; then
+              echo "Wyniki zapisane na GitHubie."
+              break
+            fi
+
+            if [ "$attempt" -eq 5 ]; then
+              echo "Nie udało się zapisać wyników po 5 próbach."
+              exit 1
+            fi
+            echo "Ktoś w międzyczasie zmienił main. Pobieram nowe dane i próbuję ponownie."
+            sleep $((attempt * 2))
+          done
 
       - name: Przygotuj pliki strony do opublikowania
         shell: bash
